@@ -1,5 +1,6 @@
 package part01;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
@@ -19,16 +20,12 @@ public class OrangeHRM {
 	@BeforeTest
 	public void setup() {
 		
-		System.out.println("Before Test case Executed");
-		//Auto generated method 
+		System.out.println("Before Test case Executed"); 
 		driver = new ChromeDriver();
-		
-		//Increase Windows
+
 		driver.manage().window().maximize();
 		
-		//Open url
 		driver.get(baseUrl);
-		//timer
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 	}
 		@Test(priority = 2)
@@ -53,7 +50,7 @@ public class OrangeHRM {
 		}
 		
 		@Test(priority = 1)
-		public void LoginTestWithInValidCredential() {
+		public void LoginTestWithInValidCredential() throws InterruptedException {
 			//user name
 			driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys("Kabirul");
 			//user password
@@ -66,12 +63,18 @@ public class OrangeHRM {
 			
 			String actual_message = driver.findElement(By.xpath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text']")).getText();
 			
-			Assert.assertTrue(actual_message.contains(excepted_message))
+			Assert.assertTrue(actual_message.contains(excepted_message));
 			
 			Thread.sleep(1500);
 			
 			
 		}
+		@Test(priority =3)
+		public void addEmployee() throws InterruptedException, IOException
+		{
+			
+		}
+		
 		
 		public void logOut() throws InterruptedException {
 			driver.findElement(By.xpath("//p[@class='oxd-userdropdown-name']")).click();
