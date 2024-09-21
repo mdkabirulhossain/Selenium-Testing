@@ -29,7 +29,7 @@ public class OrangeHRM {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 	}
 		@Test(priority = 2)
-		public void loginTestWithValidCredential() {
+		public void loginTestWithValidCredential() throws InterruptedException {
 			//user name
 			driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys("Kabirul");
 			//user password
@@ -46,6 +46,7 @@ public class OrangeHRM {
 //				System.out.println("Login failed");
 //			}
 			
+			logOut();
 			Assert.assertEquals("OrangeHRM", pageTitle);
 		}
 		
@@ -72,6 +73,7 @@ public class OrangeHRM {
 		@Test(priority =3)
 		public void addEmployee() throws InterruptedException, IOException
 		{
+			logIn();
 			//find PIM Menu and click on PIM Menu
 			driver.findElement(By.xpath("//span[text()='PIM']")).click();
 
@@ -98,9 +100,51 @@ public class OrangeHRM {
 				System.out.println("Failed to add employee!");
 			}
 			
+			logOut();
 			Assert.assertEquals("Personal Details", confirmationMessage);
 		}
 		
+		@Test(priority=4)
+		public void searchEmployeeNyName() throws InterruptedException
+		{
+			logIn();
+
+			//find PIM Menu and click on PIM Menu
+			driver.findElement(By.xpath("//span[text()='PIM']")).click();
+
+			//Select Employee List
+			driver.findElement(By.xpath("//a[normalize-space()='Employee List']")).click();
+
+			driver.findElements(By.tagName("input")).get(1).sendKeys("Kabirul");
+
+			//Click the search button.
+			driver.findElement(By.xpath("//button[normalize-space()='Search']")).click();
+
+			//    //span[@class='oxd-text oxd-text--span']
+			Thread.sleep(5000)	;
+			List<WebElement> element=	driver.findElements(By.xpath("//span[@class='oxd-text oxd-text--span']"));
+
+			String expected_message = "Record Found";
+			String message_actual = element.get(0).getText();
+			System.out.println(message_actual);
+
+			logOut();
+
+			Assert.assertTrue(message_actual.contains(expected_message));
+
+
+		}
+		
+		public void logIn()
+		{
+			//user name
+			driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys("Kabirul");
+			//user password
+			driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys("Md_Kabirul1234");
+			//login
+			driver.findElement(By.xpath("//button[@type='submit']")).submit();
+
+		}
 		
 		public void logOut() throws InterruptedException {
 			driver.findElement(By.xpath("//p[@class='oxd-userdropdown-name']")).click();
@@ -115,7 +159,7 @@ public class OrangeHRM {
 		
 		@AfterTest
 		public void tearDown() throws InterruptedException {
-			logOut();
+//			logOut();
 			Thread.sleep(1000);
 			driver.close();
 			driver.quit();
