@@ -59,7 +59,7 @@ public class OrangeHRM {
 			//login
 			driver.findElement(By.xpath("//button[@type='submit']")).submit();
 			
-			//message
+		
 			String excepted_message = "Invalid credentials";
 			
 			String actual_message = driver.findElement(By.xpath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text']")).getText();
@@ -70,27 +70,22 @@ public class OrangeHRM {
 			
 			
 		}
+		
 		@Test(priority =3)
 		public void addEmployee() throws InterruptedException, IOException
 		{
 			logIn();
-			//find PIM Menu and click on PIM Menu
 			driver.findElement(By.xpath("//span[text()='PIM']")).click();
 
-			//find Add employee and click on Add Employee option
 			driver.findElement(By.xpath("//a[text()='Add Employee']")).click();
 
-			//enter first name
 			driver.findElement(By.xpath("//input[@placeholder='First Name']")).sendKeys("Md.");
 
-			//enter last name
 			driver.findElement(By.xpath(" //input[@placeholder='Last Name']")).sendKeys("Joy");
 			
-			//click save button
 			driver.findElement(By.xpath("//button[normalize-space()='Save']")).click();
 			
 			Thread.sleep(5000);
-			// Verify if the employee is successfully added by checking the employee list personal details
 			String confirmationMessage = driver.findElement(By.xpath("//h6[normalize-space()='Personal Details']")).getText();
 
 
@@ -109,7 +104,6 @@ public class OrangeHRM {
 		{
 			logIn();
 
-			//find PIM Menu and click on PIM Menu
 			driver.findElement(By.xpath("//span[text()='PIM']")).click();
 
 			//Select Employee List
