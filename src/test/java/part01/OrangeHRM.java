@@ -106,15 +106,12 @@ public class OrangeHRM {
 
 			driver.findElement(By.xpath("//span[text()='PIM']")).click();
 
-			//Select Employee List
 			driver.findElement(By.xpath("//a[normalize-space()='Employee List']")).click();
 
 			driver.findElements(By.tagName("input")).get(1).sendKeys("Kabirul");
 
-			//Click the search button.
 			driver.findElement(By.xpath("//button[normalize-space()='Search']")).click();
 
-			//    //span[@class='oxd-text oxd-text--span']
 			Thread.sleep(5000)	;
 			List<WebElement> element=	driver.findElements(By.xpath("//span[@class='oxd-text oxd-text--span']"));
 
@@ -153,7 +150,6 @@ public class OrangeHRM {
 		
 		@AfterTest
 		public void tearDown() throws InterruptedException {
-//			logOut();
 			Thread.sleep(1000);
 			driver.close();
 			driver.quit();
